@@ -1,7 +1,13 @@
+import React from 'react'
+import Navbar from '../../components/Navbar/Navbar'
 
-function Home() {
+const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <Navbar />
+
+      <div className='container mx-auto'></div>
+    </div>
   )
 }
 
