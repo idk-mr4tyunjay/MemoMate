@@ -17,7 +17,7 @@ const Login =() => {
 
         if(!validateEmail(email)){
             setError("please enter a valid email address");
-            return
+            return;
         }
         if(!password){
             setError("Please enter the password");
@@ -27,12 +27,12 @@ const Login =() => {
 
         //login api call
         try{
-            const response = await axiosInstance.post("./Login", {
+            const response = await axiosInstance.post("./login", {
                 email: email,
                 password: password,
             });
             if(response.data && response.data.accessToken) {
-                localStorage.setItem("token", response.data.accessToekn);
+                localStorage.setItem("token", response.data.accessToken);
                 navigate("/dashboard")
             }
         } catch (error) {

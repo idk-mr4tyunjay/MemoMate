@@ -1,33 +1,63 @@
 import { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import PasswordInput from "../../components/Input/PasswordInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/helper";
+import axiosInstance from "../../utils/axiosinstance";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    if(!name){
-      setError("please enter your name")
+    if (!name) {
+      setError("please enter your name");
       return;
     }
-    if(!validateEmail(email)){
+    if (!validateEmail(email)) {
       setError("please enter a valid email address");
-      return
-  }
-  if(!password){
+      return;
+    }
+    if (!password) {
       setError("Please enter the password");
       return;
-  }
-  setError("")
+    }
+    setError("");
 
-  //signup API call
-  
+    //signup API call
+    try {
+      const response = await axiosInstance.post("./create-account", {
+        fullName: name,
+        email: email,
+        password: password,
+      });
+      //handle registration error
+      if (response.data && response.data.error) {
+        setError(response.data.message);
+        return;
+      }
+
+      if (response.data && response.data.acccessToken) {
+        localStorage.setItem("token", response.data.acccessToken);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      //handler login error
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message);
+      } else {
+        setError("An unexpected error occured, please try again");
+      }
+    }
   };
   return (
     <>
@@ -46,10 +76,10 @@ const SignUp = () => {
 
             <input
               type="text"
-              placeholder="Password"
+              placeholder="Email"
               className="input-box"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <PasswordInput
