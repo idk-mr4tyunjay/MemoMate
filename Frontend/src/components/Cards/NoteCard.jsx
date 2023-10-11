@@ -1,5 +1,9 @@
-import { MdOutlinePushPin } from "react-icons/md";
-import { MdCreate, MdDelete } from "react-icons/md";
+import { MdOutlinePushPin, MdCreate, MdDelete } from "react-icons/md";
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat'; // For using 'Do' format like '1st'
+
+dayjs.extend(advancedFormat);
+
 const NoteCard = ({
   title,
   date,
@@ -10,12 +14,14 @@ const NoteCard = ({
   onDelete,
   onPinNote,
 }) => {
+  console.log("etc");
+  console.log(dayjs().format('YYYY-MM-DD HH:mm:ss')); // Logging the current date and time
   return (
     <div className="border rounded p-4 bg-white hover:shadow-xl transition-all ease-in-out">
       <div className="flex items-center justify-between">
         <div>
-          <h6 className="text-sm front-medium">{title}</h6>
-          <span className="text-xs text-slate-500">{date}</span>
+          <h6 className="text-sm font-medium">{title}</h6> 
+          <span className="text-xs text-slate-500">{dayjs(date).format('Do MMMM YYYY')}</span>
         </div>
         <MdOutlinePushPin className={`icon-btn ${isPinned ? 'text-primary' : 'text-slate-300'}`} onClick={onPinNote} />
       </div>

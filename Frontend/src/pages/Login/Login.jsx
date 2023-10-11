@@ -9,6 +9,7 @@ const Login =() => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Track authentication status
 
     const navigate = useNavigate()
 
@@ -33,6 +34,7 @@ const Login =() => {
             });
             if(response.data && response.data.accessToken) {
                 localStorage.setItem("token", response.data.accessToken);
+                setIsLoggedIn(true); // Set authentication status to true
                 navigate("/dashboard")
             }
         } catch (error) {
@@ -48,7 +50,7 @@ const Login =() => {
     };
   return (
     <>
-        <Navbar/>
+        {isLoggedIn && <Navbar />}
         <div className="flex items-center justify-center mt-28">
             <div className="w-96 border rounded bg-white px-7 py-10">
                 <form onSubmit= {handleLogin}>
