@@ -16,6 +16,8 @@ config.json
 .env
 env
 
+ToastMessage
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

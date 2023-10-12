@@ -14,8 +14,6 @@ const NoteCard = ({
   onDelete,
   onPinNote,
 }) => {
-  console.log("etc");
-  console.log(dayjs().format('YYYY-MM-DD HH:mm:ss')); // Logging the current date and time
   return (
     <div className="border rounded p-4 bg-white hover:shadow-xl transition-all ease-in-out">
       <div className="flex items-center justify-between">
