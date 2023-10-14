@@ -29,13 +29,14 @@ const Home = () => {
     setOpenAddEditModal({isShown: true, data: noteDetails, type: "edit"});
   }
 
-  const handleCloseToast = () => {
+  const showToastMessage = (message, type) => {
     setShowToastMsg({
-      isShown : false,
-      message: "",
+      isShown : true,
+      message,
+      type
     });
   };
-  
+
   const handleCloseToast = () => {
     setShowToastMsg({
       isShown : false,
@@ -72,12 +73,17 @@ const Home = () => {
     }
   };
 
+  //delete note
+
+  const deleteNode = async (data) => {
+    
+  } 
   useEffect(() => {
     getAllNotes();
     getUserInfo();
     return () => {};
   }, []);
-
+  console.log("Rendering Home...");
   return (
     <>
       <Navbar userInfo={userInfo} />
@@ -133,6 +139,7 @@ const Home = () => {
             });
           }}
           getAllNotes={getAllNotes}
+          showToastMessage={showToastMessage}
         />
       </Modal>
       <Toast

@@ -26,7 +26,7 @@ const Navbar =({userInfo}) => {
       handleSearch={handleSearch}
       onClearSearch={onClearSearch} />
 
-      <ProfileInfo userInfo={userInfo}onLogout={onLogout} />
+      <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
     </div>
   );
 }
