@@ -25,6 +25,9 @@ const Home = () => {
 
   const [allNotes, setAllNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+
+  const [isSearch, setIsSearch] = useState(false)
+
   const navigate = useNavigate();
 
   const handleEdit = (noteDetails) => {
@@ -76,7 +79,6 @@ const Home = () => {
   };
 
   //delete note
-
   const deleteNote = async (data) => {
     const noteId = data._id;
     try {
@@ -96,6 +98,10 @@ const Home = () => {
       }
     }
   };
+
+  //search for notes
+  
+
   useEffect(() => {
     getAllNotes();
     getUserInfo();
