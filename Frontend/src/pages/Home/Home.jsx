@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosinstance";
 import Toast from "../../components/ToastMessage/Toast";
 import addnotes from "../../assets/images/addnotes.svg"
+import noData from "../../assets/images/noData.svg"
 import EmptyCard from "../../components/Emptycard/EmptyCard";
 
 const Home = () => {
@@ -100,7 +101,27 @@ const Home = () => {
   };
 
   //search for notes
-  
+  const onSearchNote = async (query) => {
+    try{
+      const response = await axiosInstance.get("/search-notes", {
+        params: {query},
+      });
+      if (response.data && response.data.notes) {
+        setIsSearch(true);
+        setAllNotes(response.data.notes);
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
+  };
+
+  //pin notes
+
+  const handleClearSearch = () => {
+    setIsSearch(false);
+    getAllNotes();
+  }
 
   useEffect(() => {
     getAllNotes();
@@ -109,11 +130,11 @@ const Home = () => {
   }, []);
   return (
     <>
-      <Navbar userInfo={userInfo} />
+      <Navbar userInfo={userInfo} onSearchNote={onSearchNote} handleClearSearch = {handleClearSearch} />
 
       <div className="container mx-auto">
         {allNotes.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 mt-8">
+          <div className="grid grid-cols-3 gap-4 mt-8">
             {allNotes.map((item, index) => (
               <NoteCard
                 key={item._id}
@@ -129,7 +150,7 @@ const Home = () => {
             ))}
           </div>
         ) : (
-          <EmptyCard imgSrc={addnotes} message={`start creating your first note! click the 'Add' button to jorunal thoughts, ideas adn remainders, Let's get started! `}/>
+          <EmptyCard imgSrc={isSearch ? noData :addnotes} message={isSearch ? `Oops! No notes found matching your search.` : `start creating your first note! click the 'Add' button to jorunal thoughts, ideas adn remainders, Let's get started! `}/>
         )}
       </div>
 
