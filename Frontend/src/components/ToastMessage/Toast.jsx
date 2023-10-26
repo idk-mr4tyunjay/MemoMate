@@ -4,7 +4,6 @@ import { MdDeleteOutline } from "react-icons/md";
 
 const Toast = ({ isShown, message, type, onClose }) => {
   useEffect(() => {
-    console.log("Toast rendering...");
     const timeoutId = setTimeout(() => {
       onClose();
     }, 3000);
@@ -23,7 +22,7 @@ const Toast = ({ isShown, message, type, onClose }) => {
         <div className="flex items-center gap-3 py-2 px-4">
           <div
             className={`w-10 h-10 flex items-center justify-center rounded-full ${
-              type === "delete" ? "bg-red-50" : "bg-green-58"
+              type === "delete" ? "bg-red-50" : "bg-green-50"
             }`}
           >
             {type ==="delete"? (
@@ -32,7 +31,7 @@ const Toast = ({ isShown, message, type, onClose }) => {
               <LuCheck className="text-xl text-green-500" />
             )}
           </div>
-          <p className="text-sa text-slate-880">{message}</p>
+          <p className="text-xs text-slate-880">{message}</p>
         </div>
       </div>
     </div>
