@@ -14,8 +14,8 @@ This is a simple note-taking application built using the MERN stack (MongoDB, Ex
 
 ## Installation FrontEnd
 
-1. Clone the repository: `git clone https://github.com/your-username/mern-note-taking-app.git`
-2. Navigate to the project directory: `cd frontend`
+1. Clone the repository: `git clone https://github.com/idk-mr4tyunjay/Notes-app.git`
+2. Navigate to the project directory: `cd Notes-app/frontend`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm run dev`
 5. Open your browser and visit: `http://localhost:3000`
@@ -23,8 +23,8 @@ This is a simple note-taking application built using the MERN stack (MongoDB, Ex
 
 ## Installation Backend
 
-1. Clone the repository: `git clone https://github.com/your-username/mern-note-taking-app.git`
-2. Navigate to the project directory: `cd backend`
+1. Clone the repository: `git clone https://github.com/idk-mr4tyunjay/Notes-app.git`
+2. Navigate to the project directory: `cd Notes-app/backend`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
 5. Open your browser and visit: `http://localhost:8000`
