@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 mongoose.connect(config.connectionString);
 
-const User = require("./models/user.model");
+const User = require("./models/user.model");                                                     
 const Note = require("./models/note.model");
 
 const express = require("express");
@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
 //create account
 app.post("/create-account", async (req, res) => {
   const { fullName, email, password } = req.body;
+  console.log("Received signup request with data:", { fullName, email, password });
 
   if (!fullName) {
     return res
@@ -46,15 +47,18 @@ app.post("/create-account", async (req, res) => {
       .status(400)
       .json({ error: true, message: "Password is required" });
   }
-
+  console.log("Checking if user with email exists:", email);
+  
   const isUser = await User.findOne({ email: email });
 
   if (isUser) {
+    console.log("User already exists:", email);
     return res.json({
       error: true,
-      message: "USer already exist",
+      message: "User already exist",
     });
   }
+  console.log("Creating new user:", { fullName, email });
   const user = new User({
     fullName,
     email,
