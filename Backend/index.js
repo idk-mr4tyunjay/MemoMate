@@ -3,7 +3,7 @@ require("dotenv").config();
 const config = require("./config.json");
 const mongoose = require("mongoose");
 
-mongoose.connect(config.connectionString);
+const connectionString = process.env.CONNECTION_STRING;
 
 const User = require("./models/user.model");                                                     
 const Note = require("./models/note.model");
@@ -14,6 +14,17 @@ const app = express();
 
 const jwt = require("jsonwebtoken");
 const { authenticateToken } = require("./utilities");
+const inProduction = require("./logger");
+
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('Database connected successfully');
+}).catch((error) => {
+  console.error('Database connection error:', error);
+});
+
 
 app.use(express.json());
 
@@ -32,7 +43,9 @@ app.get("/", (req, res) => {
 //create account
 app.post("/create-account", async (req, res) => {
   const { fullName, email, password } = req.body;
+  if (!inProduction()) {
   console.log("Received signup request with data:", { fullName, email, password });
+  }
 
   if (!fullName) {
     return res
@@ -47,18 +60,24 @@ app.post("/create-account", async (req, res) => {
       .status(400)
       .json({ error: true, message: "Password is required" });
   }
+  if (!inProduction()) {
   console.log("Checking if user with email exists:", email);
+  }
   
   const isUser = await User.findOne({ email: email });
 
   if (isUser) {
+    if (!inProduction()) {
     console.log("User already exists:", email);
+    }
     return res.json({
       error: true,
       message: "User already exist",
     });
   }
+  if (!inProduction()) {
   console.log("Creating new user:", { fullName, email });
+  }
   const user = new User({
     fullName,
     email,
